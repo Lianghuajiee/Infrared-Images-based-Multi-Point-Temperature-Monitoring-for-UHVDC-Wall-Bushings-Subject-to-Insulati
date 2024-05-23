@@ -1,36 +1,36 @@
-### 项目复现说明
-  本代码可直接复现FIGURE 4、FIGURE 6、section 3.2 中的Kernel准确率、Figure 12
+### Project Reproduction Instructions
 
-### 运行环境
-- Python 版本: 3.10.13
-- 相关库版本：requirements.txt
+This code can directly reproduce FIGURE 4, FIGURE 6, Kernel accuracy in section 3.2, and FIGURE 12.
 
-### 相关文件说明
-- `Display_images_of_the_eight_bushings`    # Information on visible light and infrared images of the eight bushings.
-- `Data`  
-  - `Raw_data`                              # 代码运行必要文件。套管的原始红外图像数据。
-  - `Generated_data`                        # 代码运行非必要文件。代码运行过程中生成的相关数据。
-  - `mlp_cpu_model.pth`                     # 代码运行必要文件。红外图像中，最大最小温度数值识别模型。
-  - `mlp_model.pth`                         # 代码运行必要文件。红外图像中，最大最小温度数值识别模型。
-- `subfunction`                             # 代码运行必要文件。子函数。
-- `result`                                  # 代码运行非必要文件。所有结果存储位置。
-- `main.py`                                 # 代码运行必要文件。主函数。
+### Runtime Environment
+- Python version: 3.10.13
+- Library versions: See `requirements.txt`
 
-## 代码运行说明
+### File Descriptions
+- `Display_images_of_the_eight_bushings`: Information on visible light and infrared images of the eight bushings.
+- `Data`:
+  - `Raw_data`: Essential files for running the code. Raw infrared image data of the bushings.
+  - `Generated_data`: Non-essential files for running the code. Data generated during the code execution.
+  - `mlp_cpu_model.pth`: Essential file for running the code. Model for recognizing the maximum and minimum temperature values in infrared images.
+  - `mlp_model.pth`: Essential file for running the code. Model for recognizing the maximum and minimum temperature values in infrared images.
+- `subfunction`: Essential files for running the code. Subfunctions.
+- `result`: Non-essential files for running the code. Location for storing all results.
+- `main.py`: Essential file for running the code. Main function.
+
+### Code Execution Instructions
 ```
-所有结果复现：
+To reproduce all results:
   python main.py all
 
-FIGURE 4 混淆矩阵结果复现运行代码：
+To reproduce the confusion matrix in FIGURE 4:
   python main.py matrix
 
-FIGURE 6 准确率复现运行代码：
+To reproduce the accuracy results in FIGURE 6:
   python main.py matrix
 
-section 3.2 中的Kernel准确率复现运行代码：
+To reproduce the Kernel accuracy in section 3.2:
   python main.py kernel
 
-Figure 12 无监督算法组合结果复现运行代码：
+To reproduce the unsupervised algorithm combination results in FIGURE 12:
   python main.py matrix
 ```
-
