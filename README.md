@@ -23,14 +23,14 @@ To reproduce all results:
   python main.py all
 
 To reproduce the confusion matrix in FIGURE 4:
-  python main.py matrix
+  python main.py FIGURE_4
 
 To reproduce the accuracy results in FIGURE 6:
-  python main.py matrix
+  python main.py FIGURE_6
 
 To reproduce the Kernel accuracy in section 3.2:
   python main.py kernel
 
 To reproduce the unsupervised algorithm combination results in FIGURE 12:
-  python main.py matrix
+  python main.py FIGURE_12
 ```
