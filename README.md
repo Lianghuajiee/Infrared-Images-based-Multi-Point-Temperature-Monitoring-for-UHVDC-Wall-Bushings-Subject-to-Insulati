@@ -7,7 +7,7 @@ This code can directly reproduce FIGURE 4, FIGURE 6, Kernel accuracy in section 
 - Library versions: See `requirements.txt`
 
 ### File Descriptions
-- `Display_images_of_the_eight_bushings`: Information on visible light and infrared images of the eight bushings.
+`Display_images_of_the_eight_bushings.zip`: Information on visible light and infrared images of the eight bushings.
 - `Data`:
   - `Raw_data`: Essential files for running the code. Raw infrared image data of the bushings.
   - `Generated_data`: Non-essential files for running the code. Data generated during the code execution.
