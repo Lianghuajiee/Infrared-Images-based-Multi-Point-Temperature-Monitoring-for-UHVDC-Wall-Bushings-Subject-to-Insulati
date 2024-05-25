@@ -23,7 +23,7 @@ if __name__ == "__main__":
  
     if sys.argv[1]=="FIGURE_4":
         try:
-            Denoising_read()
+            # Denoising_read()
             Result_analysis_4()
             print('===============================================')
             print('======FIGURE 4 matrix generation complete======')
@@ -73,8 +73,7 @@ if __name__ == "__main__":
         print('======The analysis of the impact of kernel size on accuracy is complete======')
         print('=============================================================================')
     elif sys.argv[1]=="all":
-
-       try:
+        try:
             Denoising_read()
             Result_analysis_4()
             print('===============================================')
@@ -87,7 +86,6 @@ if __name__ == "__main__":
             print('===============================================')
             print('======FIGURE 4 matrix generation complete======')
             print('===============================================')
-   
         try:
             Result_analysis_6()
             print('===============================================')
