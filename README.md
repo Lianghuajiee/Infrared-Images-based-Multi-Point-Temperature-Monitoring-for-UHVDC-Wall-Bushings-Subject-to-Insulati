@@ -13,8 +13,8 @@ This code can directly reproduce FIGURE 4, FIGURE 6, Kernel accuracy in section 
   - `Generated_data`: Non-essential files for running the code. Data generated during the code execution.
   - `mlp_cpu_model.pth`: Essential file for running the code. Model for recognizing the maximum and minimum temperature values in infrared images.
   - `mlp_model.pth`: Essential file for running the code. Model for recognizing the maximum and minimum temperature values in infrared images.
-- `subfunction`: Essential files for running the code. Subfunctions.
-- `result`: Non-essential files for running the code. Location for storing all results.
+- `Subfunction`: Essential files for running the code. Subfunctions.
+- `Result`: Non-essential files for running the code. Location for storing all results.
 - `main.py`: Essential file for running the code. Main function.
 
 ### Code Execution Instructions
