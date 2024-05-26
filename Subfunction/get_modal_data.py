@@ -34,19 +34,18 @@ def Convex_Hull (points):  #凸包顶点
 def Polygon_extraction(image,Outcome_site):
     Outcome_site = np.array([Outcome_site])
     mask = np.zeros(image.shape[:2], np.uint8)
-    cv.polylines(mask, Outcome_site, 1, 255,thickness=1)    # 描绘边缘
-    cv.fillPoly(mask, Outcome_site, 255)    # 填充
+    cv.polylines(mask, Outcome_site, 1, 255,thickness=1)    
+    cv.fillPoly(mask, Outcome_site, 255)    
     dst_back = cv.bitwise_and(image, image, mask=mask)
     bg = np.ones_like(image, np.uint8) * 255
-    cv.bitwise_not(bg, bg, mask=mask)  # bg的多边形区域为0，背景区域为255
+    cv.bitwise_not(bg, bg, mask=mask)  
     dst_white = bg + dst_back
-    # cv.imshow("dst_white.jpg", dst_white)
     return dst_back, dst_white
  
 
 
     
-def get_tmp (k , b , pixel):   #获取温度
+def get_tmp (k , b , pixel): 
     return round(pixel * k + b, 2)
     
 
@@ -74,24 +73,19 @@ def get_modal_data():
     
     if not os.path.exists('Data/Generated_data/Preconditioning_data/'): 
         os.mkdir('Data/Generated_data/Preconditioning_data/')    
-    if not os.path.exists('Data/Generated_data/Preconditioning_data_image/'): 
-        os.mkdir('Data/Generated_data/Preconditioning_data_image/')    
     model_list = ['One_svm', 'IsolationForest','EllipticEnvelope','DBSCAN', 'PCA','KMeans','HBOS','Z_Score','LocalOutlierFactor','Autoencoder']
     for num,path in enumerate(path_list): 
-        image = cv.imread('Data/Raw_data/'+path)                     # 图片输入
-        img0 = cv.cvtColor(image,cv.COLOR_BGR2GRAY)         # 将彩色图片转换为灰度图片
+        image = cv.imread('Data/Raw_data/'+path)               
+        img0 = cv.cvtColor(image,cv.COLOR_BGR2GRAY)      
         try:   
             Outcome_site = piont_take_cannula.work(path[:-4],1)      
         except :
             Outcome_site,si=find_line_take_cannula_integration(path[:10] ,copy.deepcopy(image),copy.deepcopy(img0),1)
             Outcome_site = Outcome_site+ si
-        Casing_profile= Convex_Hull(Outcome_site)                     # 提取凸包顶点
-        dst_back_gray_all, _=Polygon_extraction(img0,Casing_profile)   # 提取红外套管区域图像，灰度图
-        dst_back_rgb, _=Polygon_extraction(image,Casing_profile) # 提取红外套管区域图像，红外图
+        Casing_profile= Convex_Hull(Outcome_site)                    
+        dst_back_gray_all, _=Polygon_extraction(img0,Casing_profile)  
+        dst_back_rgb, _=Polygon_extraction(image,Casing_profile)
         Outcome_site,Casing_profile,dst_back_gray_all,dst_back_rgb,image = cut_image_conter(Outcome_site,Casing_profile,dst_back_gray_all,dst_back_rgb,image)
-        cv.imwrite('Data/Generated_data/Preconditioning_data_image/'+path[:-4]+'_dst_back_rgb.png',copy.deepcopy(dst_back_rgb))
-        cv.imwrite('Data/Generated_data/Preconditioning_data_image/'+path[:-4]+'_dst_back_gray_all.png',copy.deepcopy(dst_back_gray_all))
-        cv.imwrite('Data/Generated_data/Preconditioning_data_image/'+path[:-4]+'_image.png',copy.deepcopy(image)) 
         for model in model_list:    
             print(num,path,model)
             Preconditioning_list = {"data_list": [], "file_area_list": [], "tsne_list": [], "filtered_list": []}

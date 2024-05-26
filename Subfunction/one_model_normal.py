@@ -60,7 +60,7 @@ def Segmented_analysis (piont,x_size,y_size):
     
 
 
-def small_area_divide(image,image_gray,piont_up_mid_down,k,b,x_number,y_number,tt):
+def small_area_divide(image_gray,piont_up_mid_down,k,b,x_number,y_number):
     
     Small_area_temp_piont=[]
     Small_area_piont=[]
@@ -70,24 +70,18 @@ def small_area_divide(image,image_gray,piont_up_mid_down,k,b,x_number,y_number,t
         for o in range(y_number):
             mid_area=[]
             for j in range(2):
-                # print(i,o,j)
                 mid_area.append(piont_up_mid_down[0+o,i+j])
                 mid_area.append(piont_up_mid_down[1+o,i+j])
             mid_area = np.array(mid_area)
             Small_area_temp_piont.append(mid_area)
             Small_area_piont.append(np.average(mid_area, axis=0))
-            if tt :
-                cv.line(image, mid_area[0], mid_area[1], (0,255,0), 1, cv.LINE_AA)
-                cv.line(image, mid_area[2], mid_area[3], (0,255,0), 1, cv.LINE_AA)
-                cv.line(image, mid_area[0], mid_area[2], (0,255,0), 1, cv.LINE_AA)
-                cv.line(image, mid_area[1], mid_area[3], (0,255,0), 1, cv.LINE_AA)
-            
+           
     
-    for itme in Small_area_temp_piont :             #可优化，减轻算力
+    for itme in Small_area_temp_piont :          
         local= []   
         itme= Convex_Hull(itme)  
         dst_gray_small_area, _=Polygon_extraction(image_gray,itme)
-        nonzero_coords = np.transpose(np.nonzero(dst_gray_small_area))     # 获取非零像素的坐标
+        nonzero_coords = np.transpose(np.nonzero(dst_gray_small_area))    
         for coord in nonzero_coords:
             local.append(image_gray[coord[0], coord[1]])
         # if len(local) == 0 :
@@ -102,24 +96,23 @@ def small_area_divide(image,image_gray,piont_up_mid_down,k,b,x_number,y_number,t
 def Polygon_extraction(image,Outcome_site):
     Outcome_site = np.array([Outcome_site])
     mask = np.zeros(image.shape[:2], np.uint8)
-    cv.polylines(mask, Outcome_site, 1, 255,thickness=1)    # 描绘边缘
-    cv.fillPoly(mask, Outcome_site, 255)    # 填充
+    cv.polylines(mask, Outcome_site, 1, 255,thickness=1)    
+    cv.fillPoly(mask, Outcome_site, 255)    
     dst_back = cv.bitwise_and(image, image, mask=mask)
     bg = np.ones_like(image, np.uint8) * 255
-    cv.bitwise_not(bg, bg, mask=mask)  # bg的多边形区域为0，背景区域为255
+    cv.bitwise_not(bg, bg, mask=mask)  
     dst_white = bg + dst_back
-    # cv.imshow("dst_white.jpg", dst_white)
     return dst_back, dst_white
  
 
-def get_regression (max_tmp,min_tmp):   #获取回归线
+def get_regression (max_tmp,min_tmp):  
     img_max = 255
     img_min = 0
     k = (max_tmp - min_tmp)/(img_max - img_min)
     b = min_tmp - k * img_min
     return k , b
     
-def get_tmp (k , b , pixel):   #获取温度
+def get_tmp (k , b , pixel):   
     return round(pixel * k + b, 2)
     
 
@@ -141,7 +134,7 @@ class MLP(nn.Module):
 def model_predict(path):
 
     move_dir = ['0','1','2','3','4','5','6','7','8','9','.','-',' ']
-    max_tem_size=[8,12]             #数字高12，宽8
+    max_tem_size=[8,12]            
     max_tem_piont = [37,7]
     min_tem_piont = [37,21]
     
@@ -217,11 +210,10 @@ def get_one_model_acc():
             filtered_image , number_list  = Model_selection.anomalydetect_one(data_list1,file_area_list1,filtered_list1)
             filtered_image = np.uint8(filtered_image) 
       
-            temp_try_list["loca_small_mean_diff"][path[:-4]] = {}  # 初始化子字典
-            temp_try_list["loca_small_max_diff"][path[:-4]] = {}  # 初始化子字典
+            temp_try_list["loca_small_mean_diff"][path[:-4]] = {} 
+            temp_try_list["loca_small_max_diff"][path[:-4]] = {} 
             max_tmp , min_tmp = model_predict('Data/Raw_data/'+path)
             k , b =  get_regression(max_tmp,min_tmp)
-            image = cv.imread('Data/Generated_data/Preconditioning_data_image/'+path[:-4]+'_image.png')   
             Small_area_temp_dir = {'Small_area_temp':{},'Small_area_max_temp':{}}
             Small_area_temp_dir['Small_area_temp'] = {}
             Small_area_temp_dir['Small_area_max_temp'] = {}
@@ -232,8 +224,7 @@ def get_one_model_acc():
                 loca_small_max_diff = []
                 tr_pro_diff = []
                 piont_up_mid_down = Segmented_analysis(Outcome_site,x_number,y_number)
-                Small_area_temp,Small_area_max_temp,_ = small_area_divide(image,copy.deepcopy(filtered_image),piont_up_mid_down,k,b,x_number,y_number,1)
-                cv.imwrite('Data/Generated_data/455/'+path[:-4]+'.png', image)
+                Small_area_temp,Small_area_max_temp,_ = small_area_divide(copy.deepcopy(filtered_image),piont_up_mid_down,k,b,x_number,y_number)
                 Small_area_temp_dir['Small_area_temp'][str(y_number)+'*'+str(x_number)]  = np.array(Small_area_temp).tolist()
                 Small_area_temp_dir['Small_area_max_temp'][str(y_number)+'*'+str(x_number)]  = np.array(Small_area_max_temp).tolist()
                 if y_number == 1 :

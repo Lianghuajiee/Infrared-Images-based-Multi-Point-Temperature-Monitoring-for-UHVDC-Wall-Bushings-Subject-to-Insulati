@@ -375,10 +375,7 @@ class two_to_one:
         number_list=[]
         output_pred = []
 
-
-        # model_type_lst=["EllipticEnvelope","Z_Score"] #选取模型 需要加模型自行添加 "iso_forest", "local_out",
-        model_type_lst=["One_svm","Z_Score"] #选取模型 需要加模型自行添加 "iso_forest", "local_out",
-        # model_type_lst=["Z_Score"] #选取模型 需要加模型自行添加 "iso_forest", "local_out",
+        model_type_lst=["One_svm","Z_Score"]
         problem_point=[]
         pred1=[]
         pred2=[]
@@ -389,9 +386,8 @@ class two_to_one:
                 pred1 = stats.zscore(data_lst)
                 output_pred_1 = two_to_one.count_number(pred1,model)
             else:
-                m=two_to_one.build(model,data_lst.shape[1]) #搭建模型
-                m.fit(data_lst) #训练模型     #Z-Score不需要这个
-
+                m=two_to_one.build(model,data_lst.shape[1]) 
+                m.fit(data_lst) 
                 for data in data_lst:
                     try:
                         try:
@@ -428,10 +424,7 @@ class two_to_one:
         for point in problem_point:
             filtered_image[point[0], point[1]] = 0
         local2= []   
-        # nonzero_coords = np.transpose(np.nonzero(filtered_image))     # 获取非零像素的坐标
-        # for coord in nonzero_coords:
-            # local2.append(filtered_image[coord[0], coord[1]])
-        # local2=sorted(local2)
+    
         return filtered_image , local2
   
 class Generator(nn.Module):
@@ -481,11 +474,11 @@ class Discriminator(nn.Module):
 class Model_selection:
     
     def build(model_type,length):
-        if model_type=="IsolationForest":    #reshape
+        if model_type=="IsolationForest":  
             rng = np.random.RandomState(50000)
             m=IsolationForest(max_samples=length, random_state=42,contamination='auto', max_features=1,bootstrap=True,n_estimators=32)
         elif model_type=="One_svm":
-            m=svm.OneClassSVM(nu=0.2, kernel="poly",gamma='scale')#nu取0-0.5, 核函数kernel可选择'linear''poly''rbf'， gamma可选择'scale''auto'
+            m=svm.OneClassSVM(nu=0.2, kernel="poly",gamma='scale')
         elif model_type=="EllipticEnvelope":    
             m=EllipticEnvelope(contamination=0.06)
         elif model_type=="DBSCAN":    
@@ -702,12 +695,12 @@ class Model_selection:
         pred2 = pred2.reshape(-1,4)
         
         for i in range(pred2.shape[0]):
-            if not sum(pred1[i])== sum(pred2[i])==  4 :     # sum(pred3[i]) ==
+            if not sum(pred1[i])== sum(pred2[i])==  4 :    
                 i1=file_area[i,0]
                 j1=file_area[i,1]
                 number_list.append(0)
                 for pp in range(4): 
-                    if  not pred1[i,pp] == pred2[i,pp] == 1 :  # pred3[i,pp] == 
+                    if  not pred1[i,pp] == pred2[i,pp] == 1 :
                         if pp <= 1 : 
                             problem_point.append([i1,j1+pp])
                         else:

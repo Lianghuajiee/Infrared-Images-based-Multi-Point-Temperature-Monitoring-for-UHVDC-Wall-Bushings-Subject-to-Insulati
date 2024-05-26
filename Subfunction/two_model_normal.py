@@ -61,7 +61,7 @@ def Segmented_analysis (piont,x_size,y_size):
     
 
 
-def small_area_divide(image,image_gray,piont_up_mid_down,k,b,x_number,y_number,tt):
+def small_area_divide(image_gray,piont_up_mid_down,k,b,x_number,y_number):
     
     Small_area_temp_piont=[]
     Small_area_piont=[]
@@ -77,13 +77,7 @@ def small_area_divide(image,image_gray,piont_up_mid_down,k,b,x_number,y_number,t
             mid_area = np.array(mid_area)
             Small_area_temp_piont.append(mid_area)
             Small_area_piont.append(np.average(mid_area, axis=0))
-            if tt :
-                cv.line(image, mid_area[0], mid_area[1], (0,255,0), 1, cv.LINE_AA)
-                cv.line(image, mid_area[2], mid_area[3], (0,255,0), 1, cv.LINE_AA)
-                cv.line(image, mid_area[0], mid_area[2], (0,255,0), 1, cv.LINE_AA)
-                cv.line(image, mid_area[1], mid_area[3], (0,255,0), 1, cv.LINE_AA)
-            
-    
+          
     for itme in Small_area_temp_piont :             #可优化，减轻算力
         local= []   
         itme= Convex_Hull(itme)  
@@ -227,11 +221,10 @@ def get_two_model_acc():
             tsne_list1 = copy.deepcopy(tsne_list)
             filtered_list1 = copy.deepcopy(filtered_list)
             filtered_image , number_list  = Model_selection.anomalydetect_two_normel(data_list1,data_list2,file_area_list1,filtered_list1)
-            temp_try_list["loca_small_mean_diff"][path[:-4]] = {}  # 初始化子字典
-            temp_try_list["loca_small_max_diff"][path[:-4]] = {}  # 初始化子字典
+            temp_try_list["loca_small_mean_diff"][path[:-4]] = {} 
+            temp_try_list["loca_small_max_diff"][path[:-4]] = {}
             max_tmp , min_tmp = model_predict('Data/Raw_data/'+path)
             k , b =  get_regression(max_tmp,min_tmp)
-            image = cv.imread('Data/Generated_data/Preconditioning_data_image/'+path[:-4]+'_image.png')
             Small_area_temp_dir = {'Small_area_temp':{},'Small_area_max_temp':{}}
             Small_area_temp_dir['Small_area_temp'] = {}
             Small_area_temp_dir['Small_area_max_temp'] = {}
@@ -239,7 +232,7 @@ def get_two_model_acc():
                 x_number = cut_number[1]
                 y_number = cut_number[0]
                 piont_up_mid_down = Segmented_analysis(Outcome_site,x_number,y_number)
-                Small_area_temp,Small_area_max_temp,_ = small_area_divide(image,copy.deepcopy(filtered_image),piont_up_mid_down,k,b,x_number,y_number,1)
+                Small_area_temp,Small_area_max_temp,_ = small_area_divide(copy.deepcopy(filtered_image),piont_up_mid_down,k,b,x_number,y_number)
                 Small_area_temp_dir['Small_area_temp'][str(y_number)+'*'+str(x_number)]  = np.array(Small_area_temp).tolist()
                 Small_area_temp_dir['Small_area_max_temp'][str(y_number)+'*'+str(x_number)]  = np.array(Small_area_max_temp).tolist()
                 if y_number == 1 :

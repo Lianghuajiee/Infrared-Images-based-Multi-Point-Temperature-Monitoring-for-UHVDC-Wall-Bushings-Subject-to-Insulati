@@ -49,8 +49,8 @@ if __name__ == "__main__":
     elif sys.argv[1]=="FIGURE_12":
   
         try:
-            get_one_model_acc()
-            get_two_model_acc()
+            # get_one_model_acc()
+            # get_two_model_acc()
             matrix_two()    
             print('======================================')
             print('======matrix generation complete======')
