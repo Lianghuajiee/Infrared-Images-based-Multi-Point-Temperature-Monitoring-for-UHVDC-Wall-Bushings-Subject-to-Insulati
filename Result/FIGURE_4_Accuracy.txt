@@ -1,0 +1,9 @@
+Original: {'Accuracy': 0.932, 'True Positive': 149, 'False Negative': 11, 'False Positive': 0, 'True Negative': 1}
+Gaussian: {'Accuracy': 0.919, 'True Positive': 147, 'False Negative': 13, 'False Positive': 0, 'True Negative': 1}
+Anisotropic: {'Accuracy': 0.925, 'True Positive': 148, 'False Negative': 12, 'False Positive': 0, 'True Negative': 1}
+Total_Variation: {'Accuracy': 0.925, 'True Positive': 148, 'False Negative': 12, 'False Positive': 0, 'True Negative': 1}
+Yaroslavsky: {'Accuracy': 0.919, 'True Positive': 147, 'False Negative': 13, 'False Positive': 0, 'True Negative': 1}
+Non-Local_Means: {'Accuracy': 0.925, 'True Positive': 148, 'False Negative': 12, 'False Positive': 0, 'True Negative': 1}
+Ksvd: {'Accuracy': 0.925, 'True Positive': 148, 'False Negative': 12, 'False Positive': 0, 'True Negative': 1}
+Take maximum: {'Accuracy': 0.571, 'True Positive': 91, 'False Negative': 69, 'False Positive': 0, 'True Negative': 1}
+Our: {'Accuracy': 1.0, 'True Positive': 160, 'False Negative': 0, 'False Positive': 0, 'True Negative': 1}
