@@ -1,5 +1,0 @@
-five_to_one: {'Accuracy': 0.988, 'True Negative Rate': 1, 'True Positive  Rate': 0.988}
-four_to_one: {'Accuracy': 0.994, 'True Negative Rate': 1, 'True Positive  Rate': 0.994}
-three_to_one: {'Accuracy': 0.988, 'True Negative Rate': 1, 'True Positive  Rate': 0.988}
-one_to_one: {'Accuracy': 0.981, 'True Negative Rate': 1, 'True Positive  Rate': 0.981}
-two_to_one: {'Accuracy': 1.0, 'True Negative Rate': 1, 'True Positive  Rate': 1.0}
